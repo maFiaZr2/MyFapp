@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -212,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 closeDialog2();
             }
             ls.stop();
+            Toast.makeText(MyApplication.getContext(),"OK",Toast.LENGTH_SHORT).show();
         }
     }
 

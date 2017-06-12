@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyFapp</string>
+    <string name="weatherurl">http://api.map.baidu.com/telematics/v3/weather?location=%1$s,%2$s&amp;output=json&amp;ak=wsNApubSNzZFckn5F7RG8jusUd9ex0Ln&amp;mcode=B7:81:52:4C:5D:58:7B:69:FF:AC:60:AB:49:2B:5D:85:00:05:99:8E;com.gree.myfapp</string>
+</resources>

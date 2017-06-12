@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="eatItem">
+        <item>自由挑选</item>
+        <item>周边推荐</item>
+        <item>输入店名</item>
+    </array>
+    <array name="selectItem">
+        <item>中餐</item>
+        <item>西餐</item>
+        <item>甜点</item>
+        <item>饮品</item>
+    </array>
+    <array name="nearyItem">
+        <item>按价格排序</item>
+        <item>按距离排序</item>
+        <item>按评价排序</item>
+    </array>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@color/colorAccent"
+    android:showDividers="middle"
+    android:id="@+id/selectEat">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/select"
+        android:text="自由挑选"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:clickable="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="周边推荐"
+        android:id="@+id/nearly"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:clickable="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="感兴趣的类别或店名"
+            android:id="@+id/shopEdit"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:layout_weight="3"
+            android:id="@+id/search"/>
+
+
+    </LinearLayout>
+</LinearLayout>

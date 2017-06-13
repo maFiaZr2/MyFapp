@@ -67,12 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initComponents() {
         textView = (TextView) findViewById(R.id.show_position);
-//        weatherText[0] = (TextView) findViewById(R.id.weatherText);
-//        weatherText[1] = (TextView) findViewById(R.id.weatherText2);
-//        weatherText[2] = (TextView) findViewById(R.id.weatherText3);
-//        image[0] = (ImageView) findViewById(R.id.image1);
-//        image[1] = (ImageView) findViewById(R.id.image2);
-//        image[2] = (ImageView) findViewById(R.id.image3);
         buttons[0] = (Button) findViewById(R.id.eat_button);
         buttons[1] = (Button) findViewById(R.id.play_button);
         buttons[2] = (Button) findViewById(R.id.live_button);
@@ -80,11 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttons[4] = (Button) findViewById(R.id.control_button);
         mapView = (MapView) findViewById(R.id.mView);
         weatherList = (RecyclerView) findViewById(R.id.weatherList);
-
-
         weatherList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-//        weatherList.addItemDecoration(new DividerItemDecoration
-//                (this, LinearLayoutManager.HORIZONTAL));
         for (Button b : buttons) {
             b.setOnClickListener(this);
         }
@@ -212,12 +202,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     sb.append(s);
                                 }
                                 textView.setText(sb);
-//                                for (int i = 0; i < image.length; i++) {
-//                                    Picasso.with(MainActivity.this)
-//                                            .load(picUrl.get(i))
-//                                            .into(image[i]);
-//                                    weatherText[i].setText(weatherData.get(i));
-//                                }
                                 weatherListAdapter weatherAdaper = new weatherListAdapter(weatherData, picUrl);
                                 weatherList.setAdapter(weatherAdaper);
                                 weatherAdaper.notifyDataSetChanged();

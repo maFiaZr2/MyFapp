@@ -3,14 +3,19 @@ package com.gree.myfapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +29,7 @@ import com.gree.myfapp.Eat.EatActivity;
 import com.gree.myfapp.Map.ShowMap;
 import com.gree.myfapp.Travel.BusLine;
 import com.gree.myfapp.Travel.NearlyTraffic;
+import com.gree.myfapp.Utils.DividerItemDecoration;
 import com.gree.myfapp.Utils.LocationService;
 import com.gree.myfapp.Utils.MyDialog;
 import com.gree.myfapp.Weather.GetWeather;
@@ -34,8 +40,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LocationService ls = new LocationService(this);
     private BDLocationListener myListener = new MyLocationListener();
-    private TextView[] weatherText = new TextView[3];
-    private ImageView[] image = new ImageView[3];
+    //    private TextView[] weatherText = new TextView[3];
+//    private ImageView[] image = new ImageView[3];
     private Button[] buttons = new Button[5];
     private double longitude, latitude;
     private String locationInfo;
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<String> index;
     private ArrayList<String> picUrl;
     private Handler handler = new Handler();
+    private RecyclerView weatherList;
 
 
     @Override
@@ -60,18 +67,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initComponents() {
         textView = (TextView) findViewById(R.id.show_position);
-        weatherText[0] = (TextView) findViewById(R.id.weatherText);
-        weatherText[1] = (TextView) findViewById(R.id.weatherText2);
-        weatherText[2] = (TextView) findViewById(R.id.weatherText3);
-        image[0] = (ImageView) findViewById(R.id.image1);
-        image[1] = (ImageView) findViewById(R.id.image2);
-        image[2] = (ImageView) findViewById(R.id.image3);
+//        weatherText[0] = (TextView) findViewById(R.id.weatherText);
+//        weatherText[1] = (TextView) findViewById(R.id.weatherText2);
+//        weatherText[2] = (TextView) findViewById(R.id.weatherText3);
+//        image[0] = (ImageView) findViewById(R.id.image1);
+//        image[1] = (ImageView) findViewById(R.id.image2);
+//        image[2] = (ImageView) findViewById(R.id.image3);
         buttons[0] = (Button) findViewById(R.id.eat_button);
         buttons[1] = (Button) findViewById(R.id.play_button);
         buttons[2] = (Button) findViewById(R.id.live_button);
         buttons[3] = (Button) findViewById(R.id.walk_button);
         buttons[4] = (Button) findViewById(R.id.control_button);
         mapView = (MapView) findViewById(R.id.mView);
+        weatherList = (RecyclerView) findViewById(R.id.weatherList);
+
+
+        weatherList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        weatherList.addItemDecoration(new DividerItemDecoration
+//                (this, LinearLayoutManager.HORIZONTAL));
         for (Button b : buttons) {
             b.setOnClickListener(this);
         }
@@ -199,12 +212,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     sb.append(s);
                                 }
                                 textView.setText(sb);
-                                for (int i = 0; i < image.length; i++) {
-                                    Picasso.with(MainActivity.this)
-                                            .load(picUrl.get(i))
-                                            .into(image[i]);
-                                    weatherText[i].setText(weatherData.get(i));
-                                }
+//                                for (int i = 0; i < image.length; i++) {
+//                                    Picasso.with(MainActivity.this)
+//                                            .load(picUrl.get(i))
+//                                            .into(image[i]);
+//                                    weatherText[i].setText(weatherData.get(i));
+//                                }
+                                weatherListAdapter weatherAdaper = new weatherListAdapter(weatherData, picUrl);
+                                weatherList.setAdapter(weatherAdaper);
+                                weatherAdaper.notifyDataSetChanged();
                             }
                         });
                     }
@@ -213,7 +229,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 closeDialog2();
             }
             ls.stop();
-            Toast.makeText(MyApplication.getContext(),"OK",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -246,5 +261,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ls.stop();
         mapView.onDestroy();
         mapView = null;
+    }
+
+    private class weatherListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private final ArrayList<String> weatherData;
+        private final ArrayList<String> picUrl;
+
+        public weatherListAdapter(ArrayList<String> weatherData, ArrayList<String> picUrl) {
+            this.weatherData = weatherData;
+            this.picUrl = picUrl;
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weatherlist, parent, false);
+            return new ViewHolder(view);
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            ImageView imageView;
+            TextView textView;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                imageView = (ImageView) itemView.findViewById(R.id.weatherImage);
+                textView = (TextView) itemView.findViewById(R.id.weatherText);
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (holder instanceof ViewHolder) {
+                ViewHolder myHolder = (ViewHolder) holder;
+                Picasso.with(MyApplication.getContext()).load(picUrl.get(position)).fit().into(myHolder.imageView);
+                myHolder.textView.setText(weatherData.get(position));
+            }
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return picUrl.size();
+        }
     }
 }
